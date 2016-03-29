@@ -1,0 +1,22 @@
+\select@language {bengali}
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {bengali}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {১}সুচনা}{1}{section.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {২}সংস্থাপন}{2}{section.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৩}মুদ্রাক্ষর সজ্জা}{5}{section.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৪}পাঠনিক রূপভেদ}{5}{section.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৫}গাণিতিক রূপভেদ}{6}{section.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৬}বিজ্ঞান পরিবেশ}{7}{section.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৭}পৃষ্ঠা শৈলী}{8}{section.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৮}পরিবেশনা}{9}{section.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {৯}সমাপ্তি}{9}{section.9}

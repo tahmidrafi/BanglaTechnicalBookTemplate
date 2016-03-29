@@ -1,0 +1,330 @@
+\documentclass[a4paper,10pt,xetex]{article}
+%\csname tex4ht\endcsname
+%\documentclass[10pt, twoside, openright, a4paper,xetex]{book} % twoside, openright
+\usepackage{listings}	% you may not use this
+\usepackage{algorithm2e} % you may not use this
+\usepackage{banglatex}
+
+%\usepackage[17pt]{extsizes} % to get fontsizes 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt through out the entire document.
+
+% For BibLaTex
+\usepackage[backend=biber,style=alphabetic]{biblatex}    
+\bibliography{sample}
+
+\usepackage[colorlinks]{hyperref} %[,bookmarksopen]
+
+\begin{document}
+\title{বাংলায় মুদ্রাক্ষর সজ্জায় জিলাটেকের জন্য  বাংলাটেক শৈলী}
+\author{{\large নিউটন মু. আ. হাকিম}\\{\footnotesize mahnewton@dharapat.com}}
+\maketitle
+
+\newcommand{\ignore}[1]{}
+
+
+\abstract{জিলাটেক (XeLaTex) হল টেক (TeX) বা লাটেক (LaTeX) পরিবারে সরাসরি ইউনিকোড সমর্থন করে এমন একটি সংকলক (compiler)। জিলাটেকে বিভিন্ন ভাষা সমর্থনের জন্য পলিগ্লোসিয়া (polyglossia.sty) নামক একটি শৈলী নথি (style file) আছে যেটা দিয়ে মোটামুটি ভাবে বাংলায় লেখা সংকলন করা যায়, তবে বেশ কিছু দিকে এটার অসম্পুর্ণতা রয়েছে। সেই অসম্পূর্ণতা কিছুটা দুর করার জন্য আমরা নতুন দুটো শৈলী নথি বানিয়েছি: একটি হল banglatex.sty আরেকটি হল bengalidigits.sty। এই লেখায় আমরা এই শৈলী নথিগুলো নিয়ে আলোচনা করেছি। এছাড়া আমরা samplearticle.tex নামে একটি উৎস নথি (source file) দিয়েছি যেটিকে আপনি চাইলে জিলাটেক দিয়ে বাংলায় মুদ্রাক্ষর সজ্জার (type setting) একটি উদাহরণ হিসাবে ব্যবহার করতে পারবেন। আমরা উবুন্তু লিনাক্সের (Linux) টেক লাইভ (TeX Live) ও উইনডোজের (Windows) মিকটেকের (MiKTeX) জন্য বিস্তারিত সংস্থাপন প্রণালী (installation procedure) দিয়েছি। বাংলাটেক এই একই বিষয়ে আমাদের আগের শৈলী নথি জিলাটেকবেংগলির সাথে পুরোপুরি সামঞ্জস্যপূর্ণ, শুধু অন্তর্ভুক্ত করার সময় শৈলী নথির নাম বদলে নিতে হবে। এই নতুন সংস্করণে কিছু নতুন ছাঁদ (font) অন্তর্ভুক্ত ও বদল করা হয়েছে আর জিলাটেকের গাণিতিক রূপভেদের (math mode) জন্য কিছু নতুন নির্দেশ যোগ করা হয়েছে।}
+
+
+\tableofcontents
+\listoffigures
+\listoftables
+\listofalgorithms
+\lstlistoflistings
+
+%for book the following things might help
+\begin{titlepage}
+% design your title page here
+\end{titlepage}
+%\resetbengalipage
+%\bengalipageplainalpha
+%\tableofcontents
+%\listoffigures
+%\listoftables
+%\listofalgorithms
+%\lstlistoflistings
+%\clearpage
+%\resetbengalipage
+%\bengalipagefancynumber
+%\fancyhead[LO,RE]{\sl\nouppercase\leftmark} % twoside
+%\fancyhead[LE,RO]{\sl\nouppercase\rightmark} % twoside
+
+\section{সুচনা}
+
+আগে লাটেক (LaTeX) দিয়ে সরাসরি বাংলায় মুদ্রাক্ষর সজ্জার (type setting) সহজ উপায় ছিল না। তবে কিছু দিন আগে থেকে ব্যাংটেক (bangtex) ব্যবহৃত হয়ে আসছে। কিন্তু ব্যাংটেক ব্যবহার করা বেশ কঠিন। সরাসরি বাংলা অক্ষরে লিখতে না পারলে আমরা অনেকসময় ইংরেজী অক্ষরে বাংলা লিখে থাকি যেমন ধরুন "emon deshti kothao khuje pabe nako tumi, sokol desher ranee se je amar jonmo vumi"। ব্যাংটেকে বাংলা মুদ্রাক্ষর সজ্জা করতে গেলে ঠিক সেরকমটি করতে হয়। বাংলা শব্দগুলো ইংরেজী অক্ষরে লিখে সাথে যুক্তাক্ষর সহ অন্যান্য বিষয়াদি উৎস নথিতে (source file) বিশেষ ধরনের সংকেতে উল্লেখ করে দিতে হয়। এরপর ব্যাংটেক ক্রমলেখ(program) চালিয়ে লাটেকের সংকলক (compiler) দিয়ে আপনার উৎস নথি সংকলন করলে বাংলায় মুদ্রাক্ষর সজ্জা হয়ে মুদ্রণযোগ্য ফলন (result) নথিটি পাওয়া যায়। 
+
+সাম্প্রতিক কালে জিলাটেকের (XeLaTeX) এর আগমনে বাংলায় মুদ্রাক্ষর সজ্জা সহজ হয়ে গিয়েছে। জিলাটেকের কল্যানে আপনি আপনার উৎস টেক (.tex) নথিতে সরাসরি ইউনিকোডে বাংলা লিখতে পারবেন। একাজে ইউনিকোড সমর্থন করে আপনার পছন্দের এরকম যেকোন সম্পাদনা (editing) মন্ত্র (software) ব্যবহার করুন। তারপর জিলাটেক ক্রমলেখ চালিয়ে আপনার উৎস নথিকে সংকলন করতে হবে। আসলে জিলাটেকে আরো অনেক ভাষায়ই সরাসরি মুদ্রাক্ষর সজ্জা করা  যায়, তবে আমরা এখানে শুধু বাংলায় মুদ্রাক্ষর সজ্জা নিয়ে কথা বলব। সাধারণত জিলাটেকের সাথে ব্যবহারের জন্য পলিগ্লোসিয়া (polyglossia.sty) নামক একটি শৈলী নথি (style file) দরকার হয়। ইংরেজীর পরিবর্তে বাংলা ব্যবহৃত হলে যেসব অনুবাদের দরকার হয় এই শৈলী নথিটি সেই কাজগুলো করে। যেমন ইংরেজী chapter এর বদলে অধ্যায়, ইংরেজী digit এর বদলে বাংলা অঙ্ক, ইংরেজী মাসের নামের বদলে বাংলায় মাসের নাম, ইত্যাদি। তবে জিলাটেক ও পলিগ্লোসিয়ার এই সম্মিলিত সমাবেশ (combination) আসলে সম্পূর্ণ নয়, এটা শুধু আপনার লেখার মুল কথাবার্তাগুলোর দিকে নজর দেয়। কিন্তু অনেক খুঁটিনাটি বিষয় যেমন পৃষ্ঠা, অধ্যায়, অনুচ্ছেদ, পরিচ্ছেদ, ইত্যাদির ক্রমিক সহ আরো অনেককিছু বাংলায় আসে না। তাছাড়া গুরুত্ব বজায় রেখে বাংলা ছাঁদ (font) নির্ধারণের বিষয়েও ঐ সমাবেশ থেকে আপনি কোন ধারণা পাবেন না। সব মিলিয়ে মোটা দাগেও সন্তোষ্টি অর্জন একটু কঠিন হয়ে যায়।  
+
+জিলাটেক ও পলিগ্লোসিয়ার উপরে বর্ণিত অসম্পূর্ণতাগুলো বেশ খানিকটা দুর করার জন্য আমরা নতুন দুটো শৈলী নথি বানিয়েছি। এই দুটো শৈলী নথির একটি হল banglatex.sty আরেকটি হল bengalidigits.sty। এই লেখায় আমরা এই শৈলী নথিগুলো নিয়ে আলোচনা করেছি। এখানে উল্লেখ্য যে বাংলাটেক (banglatex.sty) এই একই বিষয়ে আমাদের আগের শৈলী নথি জিলাটেকবেংগলির (xelatexbengali.tex) সাথে পুরোপুরি সামঞ্জস্যপূর্ণ, শুধু শৈলী নথি অন্তর্ভুক্ত করার সময় নাম বদলে নিতে হবে। এই নতুন সংস্করণে কিছু নতুন ছাঁদ (font) অন্তর্ভুক্ত করা হয়েছে, পুরনো কিছু ছাঁদ বদল করা হয়েছে, আর জিলাটেকের গাণিতিক রূপভেদের (math mode) জন্য কিছু নতুন নির্দেশ যোগ করা হয়েছে। যাই হোক আমাদের তৈরী শৈলী নথি bengalidigits.sty ইংরেজী অক্ষর বা অংকের বদলে বাংলা অক্ষর বা অঙ্ক পেতে সাহায্য করে। আর banglatex.sty শৈলী নথিটি আরেকটু উচ্চ পর্যায়ে কোন ইংরেজী শব্দের বদলে কোন বাংলা শব্দ ব্যবহার করতে হবে, বা কোনখানে কোন ছাঁদ ব্যবহৃত হবে, অথবা অধ্যায়, অনুচ্ছেদ, পরিচ্ছেদ, ইত্যাদির ক্রমিক নম্বর ঠিক কীভাবে দেখানো হবে এসব নির্ধারন করে। আপনি যদি এ সবে কোন পরিবর্তন করতে চান তাহলে banglatex.sty নথিটি পরিবর্তন করে নিতে পারবেন, তবে bengalidigits.sty নথিতে আপনার কোন পরিবর্তনের দরকার হবে বলে মনে হয় না।  
+
+সব মিলিয়ে আপনার সুবিধার জন্য এই নথির সাথে আমরা আমাদের তৈরী শৈলী নথিগুলোসহ অন্যান্য আরো দরকারী  নথি দিয়ে দিয়েছি। আর এই লেখায় আরেকটু পরে উবুন্তু লিনাক্সের (Linux Ubuntu) টেক লাইভ (TeX Live) ও উইনডোজের (Windows) মিকটেকের (MiKTeX) জন্য সংস্থাপন প্রণালী (installation procedure) আর সাথে বাংলাটেক ব্যবহারের মোটামুটি সব দরকারী নিয়মকানুন বর্ণনা করা হয়েছে। আপনি চাইলে ‌\cite{thisdoc} থেকেও এই বিষয়ে  আলোচনা পেতে পারেন।\footnote{এটা আসলে এই নিবন্ধেরই যোগসুত্র, স্রেফ তথ্যসুত্র ও পাদটিকার উদাহরণ হিসাবে এটি দেখানো হয়েছে।} এছাড়া আমরা samplearticle.tex নামে একটি উৎস নথি দিয়েছি যেটিকে আপনি চাইলে জিলাটেক দিয়ে বাংলায় মুদ্রাক্ষর সজ্জার একটি উদাহরণ হিসাবে ব্যবহার করতে পারবেন। 
+
+
+\section{সংস্থাপন}
+
+আমাদের banglatex.sty ও bengalidigits.sty শৈলী নথিদুটো এবং সাথে দরকারী আরো নথিগুলোর তালিকা নীচের \tablename~\ref{thistable} এ  দেয়া হল। এছাড়া সংস্থাপন প্রণালীও আমরা নীচে বর্ণনা করেছি। তবে আমরা এখানে কেবল উইনডোজের মিকটেক এবং উবুন্তুর টেক লাইভ এর জন্য সংস্থাপন প্রণালী ব্যাখ্যা করব। আপনি যদি নিজে অন্য কোন গণনি পরিচালনা তন্ত্রে (computer operating system) বা লাটেকের অন্য কোন বিতরণে (distribution) বাংলাটেক ব্যবহার করতে পারেন, তাহলে সংশ্লিষ্ট সংস্থাপন প্রণালীর একটি খসড়া বর্ণনা আমাদের দিতে পারেন, আমরা আপনার নামসহ সেই বর্ণনা এইখানে যোগ করে দিব। 
+
+\begin{table}[!hbt]
+	\caption{নথিগুলোর তালিকা\label{thistable}}
+	\begin{center}\begin{footnotesize}
+	\begin{tabular}{|l|l|}
+		\hline
+		polyglossia.sty & জিলাটেকে বিভিন্ন ভাষা ব্যবহারের মুল শৈলী নথি‌\\\hline
+		banglatex.sty & জিলাটেকে বাংলা মুদ্রাক্ষর সজ্জার মুল শৈলী নথি\\\hline
+		{\scriptsize beamerthemebanglatex.sty} & জিলাটেকে বিমার দিয়ে পরিবেশনার জন্য মুল নথি\\\hline 
+		gloss-bengali.ldf & পলিগ্লোসিয়ায় বাংলা সমর্থনের জন্য দরকারী নথি\\\hline
+		bengalidigits.sty & ইংরেজী থেকে বাংলায় অক্ষর ও অঙ্ক অনুবাদের জন্য দরকারী\\\hline
+		bengalidigits.map &	 \begin{minipage}{0.5\textwidth}ইংরেজী থেকে বাংলায় বদল সংক্রান্ত, তবে নিশ্চিত নয়\end{minipage}\\\hline
+		bengalidigits.tec & \begin{minipage}{0.5\textwidth}ইংরেজী থেকে বাংলায় বদল সংক্রান্ত, তবে নিশ্চিত নয়\end{minipage}\\\hline
+               	এগারোটি .ttf ছাঁদ নথি & \begin{minipage}{0.5\textwidth}সোলায়মানলিপি, সোলায়মানলিপি পুরু, নিকষ পাতলা, নিকষ, একুশে দূর্গা, একুশে পূজা, লিখন, একুশে পূণর্ভবা, লালসালু, সিয়াম রূপালি, কালপূরুষ\end{minipage}\\\hline
+	\end{tabular}
+	\end{footnotesize}\end{center}
+\end{table}
+
+\subsection*{সহজ পদ্ধতি}
+আমরা জানি ল্যাটেক পরিবারের জন্য শৈলী নথিগুলো আমাদের চলতি নথিশালায় (current folder) রাখলেই চলে। এই পদ্ধতি অনুসারে আমাদের দেয়া সকল নথি আপনার যে নথিশালায় .tex ফাইলটিকে রাখবেন সেখানে অনুলিপি তৈরী করে দিন। তবে নীচের উবুন্তু ও উইনডোজের জন্য আমাদের দেয়া ১ নম্বর ধাপ অনুসরণ করে আপনাকে দরকারমতো যথাক্রমে লাটেক ও মিকটেক সংস্থাপন করতে হবে। তারপর ৪ নম্বর ধাপ অনুসরণ করে ছাঁদও সংস্থাপন করতে হবে। 
+
+\subsection*{উবুন্তুতে টেক লাইভ}
+
+\begin{enumerate}
+\item আপনার গণনিতে উবুন্তু পরিচালনা তন্ত্রে গিয়ে লাটেক ও জিলাটেক সংস্থাপন করুন। যদি আগে থেকে করা থাকে, তাহলে তো কথাই নেই। আর না থাকলে প্রান্তিকা (terminal) খুলে  আপনি আদেশ যাচনায় (command prompt) নীচের আদেশগুলো দিয়ে লাটেক ও জিলাটেক সংস্থাপন করুন। 
+\begin{itemize}
+\item sudo apt-get install texlive
+\item sudo apt-get install texlive-latex-extra
+\item sudo apt-get install texlive-xetex
+\item sudo apt-get install latex-beamer (পরিবেশনা বানাতে চাইলে)
+\end{itemize}
+
+বিকল্প পথে আপনি উবুন্তু মন্ত্র কেন্দ্রে (software centre) গিয়েও তা করতে পারবেন।
+\item এখন আপনার গণনির নথিশাল বৃক্ষে (folder tree) নথি polyglossia.sty খুঁজে বের করুন। এই নথিটি জিলাটেকের সাথেই সংস্থাপিত (installed) হয়ে যাওয়ার কথা। আর সেক্ষেত্রে খুব সম্ভবত এই নথিটি নীচে বর্ণিত যেকোন একটি পথে (path) থাকবে।
+\begin{quote}/usr/share/texlive/texmf-dist/tex/xelatex/polyglossia\end{quote}
+\begin{quote}/usr/share/texlive/texmf-dist/tex/latex/polyglossia\end{quote}
+
+এবার প্রান্তিকার আদেশ যাচনায় গিয়ে ls আদেশ চালিয়ে ঐ পথে অনেক নথির সাথে আরো যে নথিগুলো দেখতে পাবেন সেগুলো হলো: \begin{quote}polyglossia.sty\end{quote} \begin{quote}অনেকগুলো gloss-<scriptname>.ldf\end{quote} \begin{quote}devanagaridigits.sty\end{quote} এবার আপনি আমাদের দেয়া   
+\begin{quote}polyglossia.sty\end{quote}\begin{quote}gloss-bengali.ldf\end{quote}\begin{quote}bengalidigits.sty\end{quote}\begin{quote}banglatex.sty\end{quote} \begin{quote}beamerthemebanglatex.sty\end{quote} নথি পাঁচটি ঐ  নথিশালায় অনুলিপি তৈরী করে দিন। এই নথিগুলো যদি ঐ নথিশালায় আগে থেকেই থাকে তাহলে সেগুলোকে বদলে আমাদেরগুলো অনুলিপি করে দিন। দরকার হলে বদল করার আগে আগের নথিগুলোকে ভিন্ন নামে অনুলিপি করে রাখতে পারেন, যাতে কোন বিপদে পড়লে সেই অনুলিপি কাজে লাগানো যায়। তবে এই নথিগুলো ঐ নথিশালায় অনুলিপি করার জন্য আপনার sudo অভিগম্যতা (access) লাগতে পারে। নথিগুলো অনুলিপি করা হয়ে গেলে প্রান্তিকার আদেশ যাচনায় texhash আদেশটি কোন পরামিতি ছাড়া চালনা করুন, এক্ষেত্রেও sudo অভিগম্যতা লাগতে পারে।
+
+\item আমরা ঠিক নিশ্চিত নই এই ধাপটি অনুসরণ করতে হবে কিনা, তবু এটির জন্য সুপারিশ করছি। আমাদের দেয়া bengalidigits.tec ও bengalidigits.map নথিদুটো নীচের দুটো পথেই অনুলিপি করে দিন।  নথিশালা না থাকলে তৈরী করে নিন।
+\begin{scriptsize}\begin{center}‌/usr/share/texlive/texmf-dist/fonts/misc/xetex/fontmapping/xetex-bengali/\end{center}\end{scriptsize}\begin{scriptsize}\begin{center}/usr/share/texlive/texmf-dist/fonts/misc/xetex/fontmapping/polyglossia/\end{center}\end{scriptsize}
+ঐ পথগুলো বা ঐ নথিগুলো যদি আগে থেকেই থাকে তাহলে অবশ্য আর অনুলিপি করার দরকার নেই। আর যদি অনুলিপি করতেই চান তাহলে আগেরগুলোকে ভিন্ন নাম দিয়ে রাখুন, যাতে কোন বিপদে পড়লে সেগুলো কাজে লাগাতে পারেন।
+
+\item এবার আমাদের দেয়া এগারোটি ছাঁদ সংস্থাপন করুন। ছাঁদগুলোর তালিকা \tablename~\ref{thistable} এ দেয়া আছে। এগুলো মুক্ত ছাঁদ আর বিনামুল্যে পাওয়া যায়। আপনার যদি অনুমতিপত্র (license) দরকার হয় তাহলে নীচের স্থানদুটো থেকে তা যোগাড় করুন। ‌\begin{quote}http://onkur.sourceforge.net\end{quote}\begin{quote}ekushey.org\end{quote} ছাঁদ সংস্থাপন করার জন্য আপনাকে fontviewer নামক ক্রমলেখটি চালাতে হবে। এক এক করে প্রত্যেকটি ছাঁদ fontviewer দিয়ে খুলে দেখুন। ঐ ক্রমলেখ চালালে যে জানালা (window) আসবে তার ডান পাশে উপরের দিকে থাকা একটি বোতামে (button) টিপ (click) দিয়ে আপনি ছাঁদটিকে সংস্থাপন করতে পারবেন। আপনার গণনিতে যদি আগে থেকে এই ছাঁদগুলোর কোন সংস্করণ থাকে সেগুলো পুরনো হতে পারে তাই সেগুলো সরিয়ে দিয়ে আমাদেরগুলো সংস্থাপন করুন। বিকল্প হিসাবে আপনার স্থানীয় (local) বা ব্যাপীয় ছাঁদ নথিশালায় ছাঁদগুলো অনুলিপি করে দিন। আপনার স্থানীয় ছাঁদ নথিশালা হল  ‌\begin{quote}$\sim$/.local/share/fonts \end{quote} আর ব্যাপীয় ছাঁদ নথিশালা হল ‌\begin{quote}/usr/share/fonts\end{quote} \begin{quote}/usr/local/share/fonts\end{quote} ছাঁদ সংস্থাপন করার পরে আপনাকে fc-cache ক্রমলেখটি প্রান্তিকার আদেশ যাচনায় গিয়ে চালাতে হবে, এখানে sudo অভিগম্যতা লাগতে পারে।
+\end{enumerate}
+
+উপরের ধাপগুলো সম্পন্ন করলে আপনার গণনিতে উবুন্তু পরিচালনা তন্ত্রে আমাদের দরকারী সংস্থাপন কাজ সম্পূর্ণ শেষ! এবার মুদ্রাক্ষর সজ্জার পালা যা রয়েছে পরের অনুচ্ছেদে।
+
+
+\subsection*{উইনডোজে মিকটেক}
+
+\begin{enumerate}
+\item আপনার গণনিতে উইনডোজ পরিচালনা তন্ত্রে গিয়ে মিকটেক (MiKTeX) সংস্থাপন করুন। যদি আগে থেকে করা থাকে, তাহলে তো কথাই নেই। মিকটেক সংস্থাপন করলে লাটেক, জিলাটেক, বিমার সহ দরকারী সবকিছু সংস্থাপিত হয়ে যাওয়ার কথা। ধরা যাক আপনার মিকটেক নথিশালা হল C:\textbackslash{}Program Files\textbackslash{}MiKTeX 2.9। এই পথটি কী হবে তা আপনার মিকটেকের সংস্করণের (যেমন 2.9) উপরে নির্ভর করবে। 
+\item এখন আপনার নথিশাল বৃক্ষে (folder tree) পলিগ্লোসিয়া polyglossia.sty নথিটি খুঁজে বের করুন। এই নথিটি মিকটেকের সাথেই সংস্থাপিত হয়ে যাওয়ার কথা। আর সেটি হলে খুব সম্ভবত এই নথিটি নীচের পথে থাকবে।
+\begin{quote}C:\textbackslash{}Program Files\textbackslash{}MikTeX 2.9\textbackslash{}tex\textbackslash{}xelatex\textbackslash{}polyglossia\end{quote} কোন কোন গণনিতে উপরের পথে না থেকে নীচের এই পথেও থাকতে পারে, তফাৎ শুধু xelatex এর বদলে latex। \begin{quote}C:\textbackslash{}Program Files\textbackslash{}MikTeX 2.9\textbackslash{}tex\textbackslash{}latex\textbackslash{}polyglossia\end{quote}এবার আদেশ যাচনায় (start menu থেকে run এ গিয়ে cmd চালালে যে জানালা আসে) গিয়ে dir আদেশ চালিয়ে ঐ পথে অনেক নথির সাথে যে নথিগুলো দেখতে পাবেন সেগুলো হলো: \begin{quote}polyglossia.sty\end{quote} \begin{quote}অনেকগুলো gloss-<scriptname>.ldf\end{quote} \begin{quote}devanagaridigits.sty\end{quote} এবার আপনি আমাদের দেয়া  \begin{quote}polyglossia.sty\end{quote}\begin{quote}gloss-bengali.ldf\end{quote} \begin{quote}bengalidigits.sty\end{quote} \begin{quote}xelatexbengali.sty\end{quote}\begin{quote}beamerthemexelatexbengali.sty\end{quote} নথি পাঁচটি ঐ নথিশালে অনুলিপি করে দিন। এই নথিগুলো যদি ঐ নথিশালে আগে থেকেই থাকে তাহলে সেগুলোকে বদলে আমাদেরগুলো অনুলিপি করে দিন। দরকার হলে বদল করার আগে আগের নথিগুলোকে ভিন্ন নামে অনুলিপি করে রাখতে পারেন, যাতে কোন বিপদে পড়লে সেই অনুলিপি কাজে লাগানো যায়। নথি অনুলিপি করা হয়ে গেলে আদেশ যাচনায় গিয়ে  texhash অথবা mktexlsr অথবা initexmf --update-fndb এই তিনটি আদেশের যেকোন একটি অথবা সবগুলো একে একে চালান। বিকল্প হিসাবে start menu থেকে MiKTeX খুঁজে বের করে সেখানে Maintenance (Admin) মেনুতে settings (Admin) চালান। তারপর General পাটে (tab) Refresh FNDB বোতাম টিপুন। আমরা সবরকম বিকল্প দিয়ে দিলাম, কোন না কোনটি কাজ করার কথা।
+\item আমরা ঠিক নিশ্চিত নই এই ধাপটি অনুসরণ করতে হবে কিনা, তবুও সুপারিশ করছি। আমাদের দেয়া bengalidigits.tec ও bengalidigits.map নথিদুটো নীচের দুটো পথে অনুলিপি করে দিন।  নথিশালা না থাকলে তৈরী করে নিন।
+\begin{scriptsize}\begin{center}‌C:\textbackslash{}Program Files\textbackslash{}MiKTeX 2.9\textbackslash{}fonts\textbackslash{}misc\textbackslash{}xetex\textbackslash{}fontmapping\textbackslash{}xetex-bengali\end{center}\end{scriptsize}\begin{scriptsize}\begin{center}C:\textbackslash{}Program Files\textbackslash{}MiKTeX 2.9\textbackslash{}fonts\textbackslash{}misc\textbackslash{}xetex\textbackslash{}fontmapping\textbackslash{}polyglossia\end{center}\end{scriptsize}
+ঐ পথগুলো বা ঐ নথিগুলো যদি আগে থেকেই থাকে তাহলে অবশ্য আর অনুলিপি করার দরকার নেই। আর যদি অনুলিপি করতেই চান তাহলে আগের গুলোকে ভিন্ন নামে অনুলিপি করে রাখুন, যাতে কোন বিপদে পড়লে সেগুলো কাজে লাগাতে পারেন।
+
+\item এবার আমাদের দেয়া এগারোটি ছাঁদ সংস্থাপন করুন। ছাঁদগুলোর তালিকা \tablename~\ref{thistable} এ দেয়া আছে।  এগুলো মুক্ত ছাঁদ আর বিনামুল্যে পাওয়া যায়। আপনার যদি অনুমতিপত্র (license) দরকার হয় তাহলে নীচের স্থানদুটো থেকে তা যোগাড় করুন। ‌\begin{quote}http://onkur.sourceforge.net\end{quote}\begin{quote}ekushey.org\end{quote} ছাঁদ সংস্থাপন করার পরে Control Panel থেকে Appearance and Themes এ গিয়ে Fonts খুঁজে বের করতে হবে। এরপর Fonts নথিশালা খুলে আপনাকে আমাদের দেয়া ছাঁদগুলো অনুলিপি করে দিতে হবে। আপনার উইনডোজ গণনিতে যদি আগে থেকে এই ছাঁদগুলোর কোন সংস্করণ থাকে সেগুলো পুরনো হতে পারে তাই সেগুলো সরিয়ে আমাদের গুলো সংস্থাপন করুন। 
+\end{enumerate}
+
+উপরের ধাপগুলো সম্পন্ন করলে আপনার উইনডোজ গণনিতে আমাদের দরকারী সংস্থাপন কাজ সম্পূর্ণ শেষ! এবার মুদ্রাক্ষর সজ্জার পালা যা রয়েছে পরের পরিচ্ছেদে।
+
+\section{মুদ্রাক্ষর সজ্জা}
+
+আগেই বলেছি জিলাটেক ব্যবহারের ক্ষেত্রে আপনি যা বাংলায় লিখবেন তা সরাসরি ইউনিকোডে বাংলায়ই লিখবেন। এ কাজে ইউনিকোড সমর্থন করে আপনার পছন্দের এরকম যে কোন সম্পাদনা মন্ত্র (editing software) ব্যবহার করুন। আর স্বাভাবিক ভাবে ইংরেজী মুদ্রাক্ষর সজ্জার জন্য আপনি যে ভাবে লাটেক ব্যবহার করেন, বাংলা মুদ্রাক্ষর সজ্জার জন্য সেই একই ভাবেই করবেন। মোটামুটি ভাবে সকল লাটেক আদেশ জিলাটেকেও কাজ করবে। তবে আপনার উৎস টেক (.tex) নথিটিকে সংকলন (compile) করার ক্ষেত্রে লাটেকের বদলে জিলাটেক ব্যবহার করতে হবে।  
+
+আমাদের বাংলাটেক banglatex.sty শৈলীনথিতে আমরা এগারোটি ছাঁদ ব্যবহার করেছি। আগের সংস্করণ জিলাটেকবেঙ্গলিতে ছিল সাতটি ছাঁদ, যার কয়েকটিকে এখানে অন্য ছাঁদ দিয়ে বদলানো হয়েছে, আর নতুন কয়েকটি ছাঁদ যোগ করা হয়েছে। যাইহোক বাংলা ভাষায় ছাঁদগুলোর ক্ষেত্রে আসলে সম্পূর্ণতার অভাব দেখা যায়। অনেক সুন্দর ছাঁদ আছে যেটা প্রশংসনীয়। তবে কোন একটি ছাঁদ পরিবারের (font family) জন্য যতগুলো সংস্করণ দরকার তার সবগুলো পাওয়া যায় না বলে মনে হয়। যেমন একটি ছাঁদের সাধারণ (normal), রোমীয় (roman), পুরু (bold), ইতালীয় (italic), বাঁকা (slant), ইত্যাদি সংস্করণ মিলিয়ে একটি ছাঁদ পরিবার তৈরী হবে, এরকম নেই। যারা নতুন নতুন বাংলা ছাঁদ তৈরী করেন অথবা যারা পুরনো ছাঁদগুলোর সংস্কার করছেন, তারা এ বিষয়ে নজর দিলে ভাল হয়। ভিন্ন ভিন্ন পরিবারের ছাঁদ নিয়ে মুদ্রাক্ষর সজ্জায় বেশ কিছু সমস্যা হয়। যেমন এক ছাঁদের বাংলা অক্ষরগুলোর মাত্রা যে বরারর, অন্য ছাঁদের অক্ষরগুলোর মাত্রা তার চেয়ে উপরে বা নীচে। এছাড়া অক্ষরগুলোর আকারেও ছোট বড় রয়েছে, তবে এই বড় ছোট অবশ্য খানিকটা সমাধান করা যায়। আমাদের অবশ্য আপাতত কিছু করার নেই, ছাঁদ বানানো সম্ভব হচ্ছে না। পরে কখনো সুবিধাজনক ছাঁদ পাওয়া গেলে সেটা বিবেচনায় নিতে হবে। আপাতত আমরা চেষ্টা করেছি এইগুলো কোন ভাবে চালিয়ে নিতে। 
+
+যেমনটি বাংলা ছাঁদ বিষয়ে উপরের মন্তব্যে বলেছি, যথোপযুক্ত ছাঁদ পরিবারের অভাবে আমরা আপাতত বিভিন্ন রকমের ছাঁদ একসাথে ব্যবহার করছি। ইংরেজী মুদ্রাক্ষর সজ্জায় আমরা যেমন গুরুত্ব বজায় রেখে মুদ্রাক্ষর সজ্জা করতে পারি, বাংলায়ও আমরা চেষ্টা করব সেরকমটা করতে। এ কাজে আমরা বাজারে বিদ্যমান এগারোটি ছাঁদ ব্যবহার করছি। এই ছাঁদগুলো হল সোলায়মানলিপি, সোলায়মানলিপি পুরু, নিকষ হালকা, নিকষ, একুশে দূর্গা, একুশে পূজা, লিখন, একুশে পূণর্ভবা, লালসালু, সিয়াম রূপালি, ও কালপূরুষ। এখানে বলে রাখি আপনি চাইলে আমাদের বাংলাটেক banglatex.sty শৈলী নথিতে গিয়ে এই ছাঁদগুলো বদলে আপনার পছন্দের ছাঁদ সহজেই বসিয়ে দিতে পারেন, তাতে আপনার মুদ্রাক্ষর সজ্জিত লেখায় আপনার পছন্দের ছাঁদই থাকবে। তবে আমাদের পরামর্শ হল ছাঁদগুলোর নাম সরাসরি ব্যবহার না করে উদ্দেশ্য অনুযায়ী আদেশ বানিয়ে ব্যবহার করুন, যাতে কোন বিশেষ উদ্দেশ্যের জন্য পরবর্তীতে আরো ভাল কোন ছাঁদ পাওয়া গেলে আপনি সহজেই আগের লেখাগুলোর মুদ্রাক্ষর সজ্জা হালনাগাদ করতে পারেন।  সময় পাওয়া সাপেক্ষে আমাদের নিজেদেরই অন্তত একগুচ্ছ পরিপূর্ণ ছাঁদ তৈরী করার ইচ্ছা আছে। 
+
+\section{পাঠনিক রূপভেদ}
+
+বাংলায় পাঠনিক (textual) মুদ্রাক্ষর সজ্জার জন্য কোন আদেশ দরকার নেই। তবে সুনির্দিষ্ট ছাঁদে লিখতে চাইলে নীচের আদেশগুলো ব্যবহার করুন। বাংলা ছাঁদগুলোর সাথে ইংরেজী যে ছাঁদগুলো চলে আসে সেগুলো কাঙ্খিত ছাঁদ নাও হতে পারে। কাজেই ইংরেজী ছাঁদের জন্য \{$\backslash$rm ‌‌\}, \{$\backslash$bf ‌‌\}, \{$\backslash$it ‌‌\}, \{$\backslash$sl ‌‌\}, \{$\backslash$tt ‌‌\}, \{$\backslash$em ‌‌\} ইত্যাদি আদেশ ব্যবহার করুন।
+
+\begin{enumerate}
+\item $\{\backslash$bnrm \ldots\} বা $\backslash$brm\{\ldots\}  {\bnrm বাংলা রোমীয় bangla roman} 
+\item $\{\backslash$bnbr \ldots\} বা $\backslash$bbr\{\ldots\} {\bnbr বাংলা র‌োমীয় পুরু bangla bold roman}
+\item $\{\backslash$bnsf \ldots\} বা $\backslash$bsf\{\ldots\} {\bnsf বাংলা বিহীন bangla sansface}
+\item $\{\backslash$bnbs \ldots\} বা $\backslash$bbs\{\ldots\} {\bnbs বাংলা বিহীন পুরু bangla bold sansface}
+\item $\{\backslash$bnit \ldots\} বা $\backslash$bit\{\ldots\} {\bnit বাংলা ইতালীয় bangla italic}
+\item $\{\backslash$bnbi \ldots\} বা $\backslash$bbi\{\ldots\} {\bnbi বাংলা ইতালীয় পুরু bangla bold italic}
+\item $\{\backslash$bnbf \ldots\} বা $\backslash$bbf\{\ldots\} {\bnbf বাংলা পুরু bangla bold face}
+\item $\{\backslash$bntt \ldots\} বা $\backslash$btt\{\ldots\} {\bntt বাংলা দুরাক্ষর bangla teletype}
+\item $\{\backslash$bnem \ldots\} বা $\backslash$bem\{\ldots\} {\bnem বাংলা গুরুত্ব bangla emphasis}
+\item $\{\backslash$ensr \ldots\} বা $\backslash$‌esr\{\ldots\} {\ensr ইংরেজী সেরিফ english serif}
+\item $\{\backslash$ensn \ldots\} বা $\backslash$esn\{\ldots\} {\ensn ইংরেজী স্যানস english sans}
+\end{enumerate}
+
+\vspace{1em}
+\par\noindent বড় পরিসরের জন্য উপরের আদেশগুলোর বদলে নীচের পরিবেশসমুহও ব্যবহার করা যাবে। ইংরেজী ছাঁদের জন্য কাঙ্খিত ফলাফল পেতে উপরে উল্লেখিত সংশ্লিষ্ট আদেশ ব্যবহার করুন।
+
+\begin{enumerate}
+\item \brm{বাংলা রোমীয় ছাঁদ bangla roman font}\\
+ 	$\backslash$begin\{bnroman\}\ldots$\backslash$end\{bnroman\}
+\item \bbr{বাংলা রোমীয় পুরু ছাঁদ bangla bold roman font}\\
+	$\backslash$begin\{bnboldroman\}\ldots$\backslash$end\{bnboldroman\}    
+\item \bsf{বাংলা বিহীন ছাঁদ bangla sansface font}\\
+	$\backslash$begin\{bnsansface\}\ldots$\backslash$end\{bnsansface\}    
+\item \bbs{বাংলা বিহীন পুরু ছাঁদ bangla bold sansface font}\\
+	$\backslash$begin\{bnboldsansface\}\ldots$\backslash$end\{bnboldsansface\}    
+\item \bit{বাংলা ইতালীয় ছাঁদ bangla italic font}\\
+	$\backslash$begin\{bnitalic\}\ldots$\backslash$end\{bnitalic\}    
+\item \bbi{বাংলা ইতালীয় পুরু ছাঁদ bangla bold italic font}\\
+	$\backslash$begin\{bnbolditalic\}\ldots$\backslash$end\{bnbolditalic\}    
+\item \btt{বাংলা দুরাক্ষর ছাঁদ bangla teletype font}\\
+	$\backslash$begin\{bnteletype\}\ldots$\backslash$end\{bnteletype\}    
+\item \bem{বাংলা গুরুত্ব ছাঁদ bangla emphasis font}\\
+	$\backslash$begin\{bnemphasis\}\ldots$\backslash$end\{bnemphasis\}   
+\item \bbf{বাংলা পুরু ছাঁদ bangla boldface font}\\
+	$\backslash$begin\{bnboldface\}\ldots$\backslash$end\{bnboldface\}    
+\item \esr{ইংরেজী সেরিফ ছাঁদ english serif font}\\
+	$\backslash$begin\{enserif\}\ldots$\backslash$end\{enserif\}   
+\item \esn{ইংরেজী স্যানস ছাঁদ english sans font}\\
+	$\backslash$begin\{ensans\}\ldots$\backslash$end\{ensans\}   
+\end{enumerate}
+
+
+\section{গাণিতিক রূপভেদ}
+
+\begin{enumerate}
+\item অংকের ব্যবহার ঝামেলা মুক্ত: ইংরেজী হলে $123$ বা বাংলা হলে $১২৩৪$ 
+\item ইংরেজী বর্ণমালা চলনসই ভাবে: $a$; কোন নির্দেশ দরকার নেই। 
+\item ইংরেজী বর্ণমালা পছন্দনীয় ভাবে: $\mathen{a}$; $\backslash$mathen\{\} বা $\backslash$men\{\} নির্দেশ।
+\item বাংলা বর্ণমালা আপাতত কোন নির্দেশ ছাড়া ব্যবহার করা যায় না।
+‌\item বাংলা বর্ণমালার: $\mathbn{প, ফ, ব, ভ, ম}$; $\backslash$mathbn\{\} বা $\backslash$mbn\{\} ব্যবহার করে।
+‌\item গাণিতিক পারিপার্শ্বিকতায় পাঠনিক ভেদ চাইলে $\backslash$text\{\} ব্যবহার করুন।
+\item ‌‌$\backslash$mathrm\{\}, $\backslash$mathsf\{\}, $\backslash$mathtt\{\}, $\backslash$mathit\{\}, $\backslash$mathbf\{\}
+\item ‌‌$\backslash$textrm\{\}, $\backslash$textsf\{\}, $\backslash$texttt\{\}, $\backslash$textit\{\}, $\backslash$textbf\{\}
+\item অন্যান্য গাণিতিক ও গ্রীক প্রতীক ইংরেজীতে মুদ্রাক্ষর সজ্জার মতোই।
+\item সমীকরণ পুরোপুরি বাংলায়ও বা ইংরেজীতে বা মিশিয়ে লিখতে পারেন।
+	\begin{equation}
+	\mbn{ক}^২ + \mbn{খ}^4 =  \men{a}^3 + \men{b}^২  + c
+	\end{equation}
+\end{enumerate}
+
+\section{বিজ্ঞান পরিবেশ}
+
+‌\begin{theorem}[জোড় সংখ্যা]
+জোড় সংখ্যা মাত্রই দুই দিয়ে বিভাজ্য। এইটি একটি theorem.
+\end{theorem}
+
+\begin{proof}
+মধ্যবিন্দুতে লম্বগুলো সংশ্লিষ্টবিন্দুগুলো থেকে সমদুরত্বে। লম্বদ্বয়ের ছেদবিন্দু তিনটি বিন্দু থেকেই সমদুরত্বে।  এইটি একটি proof.
+\end{proof}
+
+\begin{lemma}[বিজোড় সংখ্যা]
+বিজোড় সংখ্যা দুই দিয়ে অবিভাজ্য।  এইটি একটি lemma.
+\end{lemma}
+‌
+
+\begin{corollary}[স্বাভাবিক সংখ্যা]
+জোড় ও বিজোড় সব মিলিয়ে স্বাভাবিক সংখ্যা।  এইটি একটি corollary.
+\end{corollary}
+‌\begin{construction}[সম্পাদ্য]
+তিনটি বিন্দু দিয়ে একটি বৃত্ত আঁকুন।  এইটি একটি construction.
+\end{construction}
+‌\begin{solution}
+দুটো করে বিন্দু নিয়ে রেখা এঁকে তাদের মধ্যবিন্দুতে লম্বদ্বয়ের ছেদবিন্দুকে কেন্দ্র করে যেকোন একটি বিন্দু পর্যন্ত ব্যাসার্ধ নিয়ে বৃত্ত আঁকুন।  এইটি একটি solution.
+\end{solution}
+‌\begin{definition}[শুন্য]
+শুন্য মানে কিছুই না।  এইটি একটি definition.
+\end{definition}
+‌\begin{example}[এক]
+১ বা এক বা I বা 1.  এইটি একটি example.
+\end{example}
+
+‌\begin{exercise}[মধ্যবিন্দু]
+দুটো প্রদত্ত বিন্দুর সংযোগ সরল রেখার মধ্যবিন্দু নির্ণয় করুন। এইটি একটি exercise.
+\end{exercise}
+
+\begin{problem}[বৃত্ত অংকন]
+তিনটি বিন্দু দিয়ে একটি বৃত্ত আঁকুন।  এইটি একটি problem.
+\end{problem}
+\begin{observation}[বৃত্ত]
+বৃত্তের সকল বিন্দু কেন্দ্র থেকে সমান দুরত্বে। এইটি একটি observation. 
+\end{observation}
+\begin{remark}[বৃত্ত]
+বৃত্ত দেখতে সমতলে গোলাকার। এইটি একটি remark. 
+\end{remark}
+\begin{postulate}[রেখা]
+দুটি বিন্দু দিয়ে কেবল একটি সরল রেখা টানা যায়। এইটি একটি postulate. 
+\end{postulate}
+\begin{axiom}[রেখা]
+ প্রতিটি রেখা উভয় দিকে অসীম পর্যন্ত বিস্তৃত। এইটি একটি axiom. 
+\end{axiom}
+\begin{proposition}[সত্য]
+নহে সত্য নহে মিথ্যায় নহে সত্য-মিথ্যা। এইটি একটি proposition. 
+\end{proposition}
+
+\begin{explanation}[পূর্বদিক]
+দিনের পূর্বভাগে সূর্য পূর্বদিকে থাকে। এইটি একটি explanation.
+\end{explanation}
+‌
+\begin{figure}
+\centering
+‌‌‌\begin{picture}(100,100)
+\put(50,50){\circle{32}}
+‌\put(37.5,45){‌\bnem ‌নকশা}
+\end{picture}
+\vspace{-2em}
+\caption{নকশার উদাহরণ}
+\end{figure}
+
+\begin{table}
+‌\centering
+\caption{সারণীর উদাহরণ}
+‌\begin{tabular}{|c|c|}
+\hline
+অ & আ‌‌\\\hline
+ক & খ\\\hline
+\end{tabular}
+\end{table}
+
+\begin{algorithm}
+\caption{নমুনা সংকেতলেখ}
+\begin{procedure}[H]
+‌\procedurename~evenodd(amarshonkhya)\\
+‍‍ ‍ ‍ ‍ ‍ ‍ if amarshonkhya \% 2\\
+‍ ‍ ‍ ‍ ‍ ‍ then লেখ বিজোড়\\
+‍ ‍ ‍ ‍ ‍ ‍ else লেখ জোড়
+\end{procedure}
+\end{algorithm}
+
+\begin{lstlisting}[frame=single,caption={নমুনা ফিরিস্তি}]
+lstlisting বা lstinputlisting ব্যবহার করতে হবে।
+
+#include <iostream>
+int main() {
+    return 0;
+}
+\end{lstlisting}
+
+\section{পৃষ্ঠা শৈলী}
+বাংলায় পৃষ্ঠা শৈলী করা একটু গোলমেলে। এই জন্যে আমরা কিছু লাটেক আদেশ তৈরী করেছি, যেগুলো ব্যবহার করতে হবে। আমাদের বাংলাটেক শৈলী নথিতে আমরা fancyhdr.sty ব্যবহার করেছি। তারপর empty, plain, আর fancy শৈলীগুলোকে দরকার মতো বদল করা হয়েছে। আমরা fancy শৈলীতে যে কোন পৃষ্ঠার নীচে মাঝখানে পৃষ্ঠা নম্বর রাখতে চাই। তাছাড়া অধ্যায় ও পরিচ্ছেদ সংক্রান্ত তথ্যাদি থাকবে প্রত্যেক পৃষ্ঠার উপরে বাম ও ডান দুই পাশে। আর plain শৈলী শুধু পৃষ্ঠার নীচে মাঝখানে পৃষ্ঠা নম্বর থাকবে, কিন্তু পৃষ্ঠার উপরে কিছু থাকবে না। পৃষ্ঠা নম্বর সংখ্যা ও ব্যাঞ্জনবর্ণের ক্রমিক অনুসারে হবে, fancy আর plain উভয় শৈলীতে। সবশেষে empty শৈলীতে এ পৃষ্ঠার উপরে নীচে কিছুই থাকবে না।
+
+\begin{enumerate}
+\item \textbackslash{\rm resetbengalipage}: যে কোন খানে পৃষ্ঠা নম্বর আবার এক থেকে শুরু করতে চাইলে এই আদেশ ব্যবহার করুন।
+\item \textbackslash{\rm bengalipagefancynumber}: যেকোন খানে পৃষ্ঠা নম্বর যদি সংখ্যায় চান, তাহলে এই আদেশ ব্যবহার করুন।
+\item \textbackslash{\rm bengalipagefancyalpha}: যেকোন খানে পৃষ্ঠা নম্বর যদি অক্ষরে চান, তাহলে এই আদেশ ব্যবহার করুন।
+\item \textbackslash{\rm bengalipageplainnumber}: যেকোন খানে পৃষ্ঠা নম্বর যদি সংখ্যায় চান, তাহলে এই আদেশ ব্যবহার করুন।
+\item \textbackslash{\rm bengalipageplainalpha}: যেকোন খানে পৃষ্ঠা নম্বর যদি অক্ষরে চান, তাহলে এই আদেশ ব্যবহার করুন।
+\item \textbackslash{\rm bengalipageempty}: যেকোন খানে পৃষ্ঠার উপরে বা নীচে ফাঁকা চান, তাহলে এই আদেশ ব্যবহার করুন।
+\end{enumerate}
+
+একটি বিষয় বলে রাখতে চাই, আপনি যখন fancy শৈলী ব্যবহার করছেন, তখন যে পৃষ্ঠায় নতুন অধ্যায় আসে সেখানে plain শৈলী স্বয়ংক্রিয় ভাবে ব্যবহৃত হয়। আমাদের যেহেতু সংখ্যা ও অক্ষর দুইরকম পৃষ্ঠা নম্বর ব্যবহার করতে হবে, তাই \textbackslash{\rm bengalipagefancynumber} ও \textbackslash{\rm bengalipagefancyalpha} এর সাথে সাথে স্বয়ংক্রিয়ভাবে plain শৈলী বদলে দিতে হয়। যাইহোক আমাদের দেয়া উৎস নথিটিতে (samplearticle.tex) উপরের আদেশগুলো ব্যবহার করা হয়েছে, আপনি চাইলে দেখে নিতে পারবেন।
+
+‌\section{পরিবেশনা}
+বিমার দিয়ে বাংলায় পরিবেশনা তৈরীর জন্য readmeslide.pdf বা sampleslide.pdf আর sampleslide.tex দেখুন।
+
+\section{সমাপ্তি}
+যে কোন ভুলভ্রান্তি ও পরামর্শ আমাদের জানাতে অনুরোধ করছি। আমরা সংশোধন ও পরিবর্ধনের চেষ্টা করব। জানা সমস্যাগুলোর মধ্যে bibtex এর সাথে সমন্বয় এখনো করা হয় নাই। কাজেই তথ্যসুত্রগুলোর উল্লেখ ইংরেজী অক্ষর চলে আসতে পারে। তবে biblatex/biber এর style alphabetic ব্যবহার করলে কাজ হয়। বাংলায় নিবন্ধ লেখা উপভোগ করুন। অন্যদের জানিয়ে সেই আনন্দ ছড়িয়ে দিন।
+
+% For BibTeX
+%\bibliographystyle{alpha} %plain
+%\bibliography{sample}
+
+%For BibLaTeX 
+\printbibliography
+
+% Issue to be fixed.
+
+%A sample code inclusion command: \lstinputlisting[label={code:simple-code},caption={simple code.cpp}]{code/chapter_2/simple_code.cpp}, and corresponding reference command is: \ref{code:simple-code}
+\end{document}
+
