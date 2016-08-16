@@ -1,0 +1,381 @@
+% Copyright 2013 by M.A.H. Newton mahnewton@gmail.com
+% This file may be distributed and/or modified freely.
+% The author has no liability under any circumstances.
+% Use sample-slide.tex for usage details.
+
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{beamerthemebanglatex}[2013/08/02 M.A.H. Newton's XeLatex Beamer Style File for Bengali]
+
+\RequirePackage{ltxcmds}
+\newcommand{\IfPackageLoaded}[2]{\ltx@ifpackageloaded{#1}{#2}{}}
+
+\RequirePackage{pgf}
+
+% Package options
+\newif\ifbeamer@sb@ruled
+\DeclareOptionBeamer{ruled}[true]{\csname beamer@sb@ruled#1\endcsname}
+\ExecuteOptionsBeamer{ruled=false}
+\ProcessOptionsBeamer
+
+\newif\ifbeamer@sb@somber
+\DeclareOptionBeamer{somber}[true]{\csname beamer@sb@somber#1\endcsname}
+\ExecuteOptionsBeamer{somber=false}
+\ProcessOptionsBeamer
+
+\newif\ifbeamer@sb@square
+\DeclareOptionBeamer{square}[true]{\csname beamer@sb@square#1\endcsname}
+\ExecuteOptionsBeamer{square=false}
+\ProcessOptionsBeamer
+
+\newif\ifbeamer@sb@arrow
+\DeclareOptionBeamer{arrow}[true]{\csname beamer@sb@arrow#1\endcsname}
+\ExecuteOptionsBeamer{arrow=false}
+\ProcessOptionsBeamer
+
+\newif\ifbeamer@sb@shadow
+\DeclareOptionBeamer{shadow}[true]{\csname beamer@sb@shadow#1\endcsname}
+\ExecuteOptionsBeamer{shadow=false}
+\ProcessOptionsBeamer
+
+\RequirePackage{xunicode}
+\RequirePackage{xltxtra}
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+\def\nobreakspace{}	% to fix some bug
+
+\newfontface\bengalifont[Script=Bengali]{Nikosh}		% 	Default font
+\setromanfont{NikoshLight}								%	roman font
+\setsansfont{SolaimanLipi}								%	sans font
+\setmonofont[Scale=0.85]{Siyam Rupali}					%	mono font
+
+\setmainlanguage[numerals=Bengali]{bengali}
+\selectlanguage{bengali}
+\selectbackgroundlanguage{bengali}
+
+\renewcommand\mathfamilydefault{\itdefault}
+
+%\hyphenrules{bengali}
+
+% Font files to be used for different semantic elements.
+% You can change the fonts as you wish
+
+\newfontface\bnrm[Script=Bengali,Scale=1.12]{NikoshLight} 	% Bengali substitution for sansface
+\newfontface\bnbr[Script=Bengali,Scale=1.12]{Nikosh} 		% Bengali substitution for bold sansface
+\newfontface\bnsf[Script=Bengali]{SolaimanLipi}			% Bengali substitution for roman 
+\newfontface\bnbs[Script=Bengali]{SolaimanLipi Bold}		% Bengali substitution for bold-roman
+\newfontface\bnit[Script=Bengali,Scale=1.0]{Ekushey Durga} 	% Bengali substitution for italic
+\newfontface\bnbi[Script=Bengali,Scale=1.11]{Ekushey Puja}	% Bengali substitution for bold-italic
+\newfontface\bnbf[Script=Bengali, Scale=0.81]{Likhan}		% Bengali substitution for fashion
+\newfontface\bnem[Script=Bengali,Scale=0.91]{Ekushey Punarbhaba}% Bengali substitution for emphasis
+\newfontface\bntt[Script=Bengali,Scale=0.85]{Siyam Rupali}	% Bengali substitution for teletype
+\newfontface\ensr[Script=Bengali,Scale=1.0]{Kalpurush} 		% Bengali substitution for english-serif
+\newfontface\ensn[Script=Bengali,Scale=1.0]{Lalsalu} 		% Bengali substitution for english-sans
+
+\newcommand{\brm}[1]{{\bnrm {#1}}}				% command for bangla roman text
+\newcommand{\bbr}[1]{{\bnbr {#1}}}				% command for bangla bold roman text
+\newcommand{\bsf}[1]{{\bnsf {#1}}}				% command for bangla sansface text
+\newcommand{\bbs}[1]{{\bnbs {#1}}}				% command for bangla bold sansface text
+\newcommand{\bit}[1]{{\bnit {#1}}}				% command for bangla italic text
+\newcommand{\bbi}[1]{{\bnbi {#1}}}				% command for bangla bold italic text
+\newcommand{\bbf}[1]{{\bnbf {#1}}}				% command for bangla boldface text
+\newcommand{\bem}[1]{{\bnem {#1}}}				% command for bangla emphasis text
+\newcommand{\btt}[1]{{\bntt {#1}}}				% command for bangla teletype text
+\newcommand{\esr}[1]{{\ensr {#1}}}				% command for bangla with english-roman
+\newcommand{\esn}[1]{{\ensn {#1}}}				% command for bangla with enslish-serif
+
+\newcommand\mathen[1]{\mathnormal{{#1}}}			% English letters in math mode
+\newcommand\mathbn[1]{\mathit{{#1}}}				% Bangla letters in math mode
+
+\newcommand\men[1]{\mathen{{#1}}}				% Short form of \mathen
+\newcommand\mbn[1]{\mathbn{{#1}}}				% Short form of \mathbn
+
+\newenvironment{bnroman}{{\bnrm}{}}				% environment for bangla roman
+
+\newenvironment{bnboldroman}{\bnbr{}{}}				% environment for bangla bold roman
+
+\newenvironment{bnsansface}{\bnsf{}{}}				% environment for bangla sansface
+
+\newenvironment{bnboldsansface}{\bnbs{}{}}			% environment for bangla bold sansface
+
+\newenvironment{bnitalic}{\bnit{}{}}				% environment for bangla italic
+
+\newenvironment{bnbolditalic}{\bnbi{}{}}			% environment for bangla bold italic
+
+\newenvironment{bnboldface}{\bnbf{}{}}				% environment for bangla boldface
+
+\newenvironment{bnemphasis}{\bnem{}{}}				% environment for bangla emphasis
+
+\newenvironment{bnteletype}{\bntt{}{}}				% environment for bangla teletype
+
+\newenvironment{enserif}{\ensr{}{}}				% environment for bangla with eng-roman
+
+\newenvironment{ensans}{\ensn{}{}}				% environment for bangla with eng-sans
+
+
+\mode<presentation>
+\useoutertheme{default}
+\usefonttheme{default}
+
+\ifbeamer@sb@square
+	\useinnertheme{rectangles}
+\else
+	\useinnertheme{circles}
+\fi
+\ifbeamer@sb@somber
+	\setbeamercolor{block title}{use=structure,fg=bengaliblack,bg=structure.fg!20!}
+	\setbeamercolor{block title alerted}{use=alerted text,fg=bengaliblack,bg=alerted text.fg!20!}
+	\setbeamercolor{block title example}{use=example text,fg=bengaliblack,bg=example text.fg!20!}
+
+	\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!30!bg}
+	\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!30!bg}
+	\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!30!bg}
+\else
+	\setbeamercolor{block title}{use=structure,fg=structure.fg,bg=structure.fg!20!bg}
+	\setbeamercolor{block title alerted}{use=alerted text,fg=alerted text.fg,bg=alerted text.fg!20!bg}
+	\setbeamercolor{block title example}{use=example text,fg=example text.fg,bg=example text.fg!20!bg}
+
+	\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!50!bg}
+	\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!50!bg}
+	\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!50!bg}
+\fi
+
+\definecolor{bnred}{cmyk}{0,1,1,0}
+\definecolor{bnblue}{cmyk}{1,1,0,0}
+\definecolor{bngreen}{cmyk}{1,0,1,0.25}
+\definecolor{bncyan}{cmyk}{1,0,0,0}
+\definecolor{bnmagenta}{cmyk}{0,1,0,0}
+\definecolor{bnyellow}{cmyk}{0,0,1,0}
+\definecolor{bnblack}{cmyk}{0,0,0,1}
+\definecolor{bnwhite}{cmyk}{0,0,0,0}
+\definecolor{bngrey}{cmyk}{0,0,0,0.5}
+
+\newcommand{\attention}[1]{\textcolor{bngreen}{{#1}}}
+
+\setbeamercolor{title}{fg=bnblue}
+\setbeamerfont{title}{series=\bnbs}
+
+\setbeamercolor{author}{fg=bngreen}
+\setbeamerfont{author}{series=\bnbs}
+\setbeamerfont{institute}{shape=\bnsf}
+\setbeamerfont{date}{size=\footnotesize}
+
+\setbeamercolor{frametitle}{fg=bnred}
+\setbeamerfont{frametitle}{series=\bnbs}
+
+\setbeamerfont{block title}{shape=\bnbs}
+\setbeamerfont{block body}{shape=\bntt}
+
+\ifbeamer@sb@arrow
+	\setbeamertemplate{itemize items}[triangle]
+\fi
+
+\ifbeamer@sb@shadow
+	\setbeamertemplate{blocks}[rounded][shadow=true]
+\else
+	\setbeamertemplate{blocks}[rounded][shadow=false]
+\fi
+
+
+%Change this captions as you need
+\def\captionsbengali{%
+  \def\refname{তথ্যসুত্রাবলী}%
+  \def\abstractname{সারাংশ}%
+  \def\bibname{গ্রন্থসুত্রাবলী}%
+  \def\prefacename{পূর্বকথা}%
+  \def\chaptername{অধ্যায়}%
+  \def\sectionname{অনুচ্ছেদ}%
+  \def\subsectionname{উপচ্ছেদ}%
+  \def\subsubsectionname{উপউপচ্ছেদ}%
+  \def\paragraphname{পরিচ্ছেদ}
+  \def\subparagraphname{উপপরিচ্ছেদ}%
+  \def\appendixname{পরিশিষ্ট}%
+  \def\contentsname{সূচীপত্র}%
+  \def\listfigurename{নকশা তালিকা}%
+  \def\listtablename{সারণী তালিকা}%
+  \def\listalgorithmname{সংকেত তালিকা}%
+  \def\lstlistlistingname{ফিরিস্তি তালিকা}%
+  \def\indexname{সূচক}%
+  \def\figurename{নকশা}%
+  \def\tablename{সারনী}%
+  \def\algorithmname{সংকেত}%
+  \def\procedurename{প্রণালী}%
+  \def\functionname{বিপাতক}%
+  \def\lstlistingname{ফিরিস্তি}
+  \def\partname{খন্ড}%
+  \def\pagename{পৃষ্ঠা}%
+  \def\seename{দেখুন}%
+  \def\alsoname{আরও দেখুন}%
+  \def\enclname{সংযুক্তি}%
+  \def\ccname{অনুলিপি}%
+  \def\headtoname{প্রতি}%
+  \def\proofname{প্রমাণ}%
+  \def\glossaryname{পরিভাষা}%
+  \def\solutionname{সমাধান}
+  \def\theoremname{উপপাদ্য}
+  \def\lemmaname{প্রতিপাদ্য}
+  \def\corollaryname{অনুসিদ্ধান্ত}
+  \def\problemname{সমস্যা}
+  \def\constructionname{সম্পাদ্য}
+  \def\propositionname{প্রতিজ্ঞা}
+  \def\axiomname{স্বতঃসিদ্ধ}
+  \def\postulatename{স্বীকার্য}
+  \def\observationname{পর্যবেক্ষণ}
+  \def\definitionname{সংজ্ঞা}
+  \def\explanationname{ব্যাখ্যা}
+  \def\remarkname{মন্তব্য}
+  \def\equationname{সমীকরণ}
+  \def\examplename{উদাহরণ}
+  \def\exercisename{অনুশীলনী}
+}
+
+\theoremstyle{theorem}
+
+\uselanguage{bengali}
+\languagepath{bengali}
+\deftranslation[to=bengali]{Theorem}{\bnbs\theoremname}
+\deftranslation[to=bengali]{Lemma}{\bnbs\lemmaname}
+\deftranslation[to=bengali]{Corollary}{\bnbs\corollaryname}
+\deftranslation[to=bengali]{Problem}{\bnbs\problemname}
+\deftranslation[to=bengali]{Definition}{\bnbs\definitionname}
+\deftranslation[to=bengali]{Example}{\bnbs\examplename}
+\deftranslation[to=bengali]{Solution}{\bnbs\solutionname}
+
+\let\explanation\relax
+\newtheorem{explanation}{{\bnbs\explanationname}}
+\let\exercise\relax
+\newtheorem{exercise}{{\bnbs\exercisename}}
+\let\proposition\relax
+\newtheorem{proposition}{{\bnbs\propositionname}}
+\let\construction\relax
+\newtheorem{construction}{{\bnbs\constructionname}}
+\let\axiom\relax
+\newtheorem{axiom}{{\bnbs\axiomname}}
+\let\postulate\relax
+\newtheorem{postulate}{{\bnbs\postulatename}}
+\let\observation\relax
+\newtheorem{observation}{{\bnbs\observationname}}
+\let\proof\relax
+\newtheorem{proof}{{\bnbs\proofname}}
+\let\remark\relax
+\newtheorem{remark}{{\bnbs\remarkname}}
+
+
+
+%\setbeamertemplate{footnote}{%
+%    [{\mathbn{\insertfootnotemark} {\rm hi}] \insertfootnotetext
+%}
+
+%\renewcommand{\thefootnote}{\bengalinumber{\arabic{footnote}}}
+
+\setbeamertemplate{enumerate item}{\bengalinumber{\insertenumlabel}}
+\setbeamertemplate{enumerate subitem}{\bengaliconso{\insertsubenumlabel}}
+\setbeamertemplate{enumerate subsubitem}{\bengalivowel{\insertsubsubenumlabel}}
+\setbeamerfont{description item}{shape=\bnbs}
+\setbeamerfont{description subitem}{shape=\bnbs}
+\setbeamerfont{description subsubitem}{shape=\bnbs}
+
+%\renewcommand\thesection{\bengalinumber{\arabic{section}}}
+%\renewcommand\thesubsection{\bengalinumber{\arabic{section}}.\bengalinumber{\arabic{subsection}}}
+%\renewcommand\thesubsubsection{\bengalinumber{\arabic{section}}.\bengalinumber{\arabic{subsection}}.\bengalinumber{\arabic{subsubsecton}}}
+%\renewcommand{\thefigure}{\bengalinumber{\arabic{figure}}} 
+%\renewcommand{\thetable}{\bengalinumber{\arabic{table}}}
+\renewcommand{\theequation}{\bengalinumber{\arabic{equation}}}
+\ifdefined\thealgorithm
+		\renewcommand{\thealgorithm}{\bengalinumber{\arabic{algorithm}}}
+\fi
+\newcommand{\thelstlisting}{\bengalinumber{\arabic{lstlisting}}}
+
+\AtBeginDocument{
+	\IfPackageLoaded{listings}
+	{
+		\renewcommand{\thelstnumber}{\bengalinumber{\arabic{lstnumber}}}
+		\renewcommand{\thelstlisting}{\bengalinumber{\arabic{lstlisting}}}
+	}{}
+	\IfPackageLoaded{algorithm}
+	{
+		\floatname{algorithm}{\algorithmname}
+		\renewcommand{\thealgorithm}{\bengalinumber{\arabic{algorithm}}}
+	}{}
+	\IfPackageLoaded{algorithm2e}
+	{
+		\SetAlgorithmName{\algorithmname}{\algorithmname}{\listalgorithmname}
+		\SetAlgoProcName{\procedurename}{\procedurename}
+		\SetAlgoFuncName{\functionname}{\functionname}
+		\renewcommand{\thealgocf}{\bengalinumber{\arabic{algocf}}}
+		\renewcommand{\theAlgoLine}{\bengalinumber{\arabic{AlgoLine}}}
+	}{}
+}
+
+\setbeamertemplate{section in toc}{\bengalinumber{\inserttocsectionnumber}.~\inserttocsection}
+\setbeamertemplate{section/subsection in toc}{\inserttocsubsection}
+
+% Adjust frame layout to accommodate headline and footline
+\defbeamertemplate*{frametitle}{bengali}[1][center]
+{
+  \ifx\insertframesubtitle\@empty
+	  \vspace{-19mm}
+  \else
+	  \vspace{-21mm}
+  \fi	
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}
+  \@tempdima=\textwidth
+  \advance\@tempdima by\beamer@leftmargin
+  \advance\@tempdima by\beamer@rightmargin
+  \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
+	\vfill
+    \if@tempswa\else\csname beamer@fte#1\endcsname\fi
+    {
+      \ifx\insertframesubtitle\@empty
+		{\usebeamerfont{frametitle}\insertframetitle\par}
+      \else
+		{\usebeamerfont{frametitle}\insertframetitle\par}
+      		{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}
+      \fi
+    }
+	\vfill
+    \if@tempswa\else\vskip-.3cm\fi
+  \end{beamercolorbox}
+}
+
+% Set header with the bengali logo
+\setbeamercolor{headline}{fg=bnblack}
+%\pgfdeclareimage[width=25mm]{BannerLogo}{./bengalibannerlogo}
+\setbeamertemplate{headline}
+{
+  \hrule\hrule
+%  \ifx\insertframetitle\@empty
+	\begin{pgfpicture}{0pt}{0pt}{25mm}{15mm}
+%	  \pgfputat{\pgfpoint{\paperwidth-2mm}{2mm}}{\pgfbox[right,bottom]{\pgfuseimage{BannerLogo}}}
+	\end{pgfpicture}
+%  \else
+%	\begin{pgfpicture}{0pt}{0pt}{25mm}{15mm}
+%	  \pgfputat{\pgfpoint{\paperwidth-2mm}{2mm}}{\pgfbox[right,bottom]{\pgfuseimage{BannerLogo}}}
+%	\end{pgfpicture}
+%  \fi
+  \ifbeamer@sb@ruled
+	\hrule\hrule
+  \fi
+  \vspace{5mm}
+}
+
+% Set the footer with the page-numbering
+\setbeamercolor{footline}{bg=bnwhite,fg=bnblack}
+\setbeamertemplate{footline}
+{
+  \vspace{-10mm}
+%  \ifx\insertframetitle\@empty
+    \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{2mm}
+      \pgfputat{\pgfpoint{2mm}{2mm}}{\pgftext[left]{\bengalinumber{\insertframenumber}~/~\bengalinumber{\inserttotalframenumber}}}
+    \end{pgfpicture}
+%  \else
+%    \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{2mm}
+%      \pgfputat{\pgfpoint{2mm}{2mm}}{\pgftext[left]{\insertframenumber~/~\inserttotalframenumber}}
+%    \end{pgfpicture}
+%  \fi
+  \hrule\hrule
+}
+
+\mode<all>
+
+\endinput

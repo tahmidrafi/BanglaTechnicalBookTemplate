@@ -1,0 +1,194 @@
+\documentclass[12pt, a4paper, xetex, openany]{book} % twoside, openright
+\usepackage[a4paper,left=1.39in,right=1.39in,top=1.85in,bottom=1.85in]{geometry}
+\usepackage[colorlinks,bookmarksopen]{hyperref}
+\usepackage[svgnames]{xcolor} % Required to specify font color
+\usepackage{graphicx} % Required for box manipulation
+%\usepackage[hidelinks]{hyperref}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{caption}
+\usepackage[none]{hyphenat}
+\usepackage{paralist}
+\usepackage{perpage}
+\usepackage{amsmath}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\usetikzlibrary{decorations.text}
+\usepackage{banglatex}
+\usepackage{fontspec}
+\usetikzlibrary{shapes,calc,arrows,through,intersections,angles,positioning,quotes,decorations.markings,shapes.multipart,chains}
+\usepackage{tkz-euclide}
+\usepackage{upquote}
+\usepackage{makeidx}
+\usepackage{indentfirst}
+\usepackage[makeroom]{cancel}
+\usetikzlibrary{matrix,arrows,fit}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usetkzobj{all}
+\renewcommand{\baselinestretch}{1.1}
+
+%----------------------------------------------------------------------------------------
+%   Enable indexing
+%----------------------------------------------------------------------------------------
+\makeindex
+%\newfontfamily{\bengalifonttt}{SolaimanLipi}
+
+%----------------------------------------------------------------------------------------
+%   Footnote numbering restarts per page
+%----------------------------------------------------------------------------------------
+\MakePerPage{footnote}
+
+%----------------------------------------------------------------------------------------
+%   Big O
+%----------------------------------------------------------------------------------------
+\newcommand{\BigO}[1]{\ensuremath{\operatorname{O}\bigl(#1\bigr)}}
+
+\hypersetup{hidelinks=true}
+
+%----------------------------------------------------------------------------------------
+%   Space in the page of content
+%----------------------------------------------------------------------------------------
+\makeatletter
+\renewcommand{\l@section}{\@dottedtocline{1}{1.5em}{2.6em}}
+\renewcommand{\l@subsection}{\@dottedtocline{2}{4.0em}{3.6em}}
+\renewcommand{\l@subsubsection}{\@dottedtocline{3}{7.4em}{4.5em}}
+\makeatother
+
+%----------------------------------------------------------------------------------------
+%   CODE FORMATTING
+%----------------------------------------------------------------------------------------
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\newfontfamily{\lstcourier}[Scale=0.85]{Courier}
+\lstset{
+    backgroundcolor=\color{lbcolor},
+    tabsize=4,
+    language=[GNU]C++,
+	basicstyle=\lstcourier,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+	showstringspaces=false,
+	extendedchars=false,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	frame=single,
+	numbers=left,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	identifierstyle=\lstcourier,
+	keywordstyle=\lstcourier,
+	% keywordstyle=\color[rgb]{0,0,1},
+	% commentstyle=\color[rgb]{0.0,0.4,0.00},
+	% stringstyle=\color[rgb]{0.627,0.126,0.000},
+	% numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+	xleftmargin=2.5em,
+	framexleftmargin=2.5em,
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\newcommand*{\rotrt}[1]{\rotatebox{90}{#1}} % Command to rotate right 90 degrees
+\newcommand*{\rotlft}[1]{\rotatebox{-90}{#1}} % Command to rotate left 90 degrees
+
+\newcommand*{\titleBC}{\begingroup % Create the command for including the title page in the document
+\centering % Center all text
+
+\def\CP{\textit{\Huge জিলাটেক ব্যবহার করে বাংলায় টেকনিক্যাল লেখালেখি}} % Title
+\def\CCP{\textit{\Huge নমুনা টেমপ্লেট}}
+
+\newlength{\drop} % Command for generating a specific amount of whitespace
+\drop=0.1\textheight % Define the command as 10% of the total text height
+\rule{\textwidth}{1pt}\par % Thick horizontal line
+\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+\vspace{\drop} % Whitespace between the top lines and title
+
+
+\settowidth{\unitlength}{\CCP} % Set the width of the curly brackets to the width of the title
+{\color{Black}\resizebox*{\unitlength}{\baselineskip}{\rotrt{$\}$}}} \\[\baselineskip] % Print top curly bracket
+\textcolor{Black}{\CP} \\[\baselineskip] % Print title
+{\color{Black}\Huge নমুনা টেমপ্লেট} \\ % Tagline or further description
+{\color{Black}\resizebox*{\unitlength}{\baselineskip}{\rotlft{$\}$}}} % Print bottom curly bracket
+
+%\vfill % Whitespace between the title and the author name
+\vspace{0.25\drop} % Whitespace between the title and short horizontal line
+\vspace{\drop} % Whitespace between the thin horizontal line and the author name
+
+{\Large\textbf{নিউটন মু. আ. হাকিম (mahnewton@gmail.com)}}\\ % Author name
+{\Large\textbf{মোঃ মাহবুবুল হাসান (shanto86@gmail.com)}}\\ % Author name
+{\Large\textbf{তাহমিদ রাফি (tahmid.rafi@dimikcomputing.com)}}\\ % Author name
+
+\vfill % Whitespace between the author name and the publisher logo
+
+\vspace*{\drop} % Whitespace under the publisher text
+অগাস্ট, ২০১৬ % Year published
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+\vspace{1em} % Whitespace under the publisher text
+\includegraphics{image/logo.png}\\[1.27cm]
+\vspace{-3em}
+{\Large\textbf{দ্বিমিক প্রকাশনী}}\\ % Publisher name
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
+\rule{\textwidth}{1pt}\par % Thick horizontal line
+
+\endgroup
+}
+
+%----------------------------------------------------------------------------------------
+%	END TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+%%%%%%%%
+\begin{document}
+\sloppy
+\titleBC
+
+%----------------------------------------------------------------------------------------
+%	PRINTERS PAGE
+%----------------------------------------------------------------------------------------
+
+% Insert printer's page here
+
+%----------------------------------------------------------------------------------------
+%	END PRINTERS PAGE
+%----------------------------------------------------------------------------------------
+
+
+\cleardoublepage
+\section*{ভূমিকা}
+\addtocounter{section}{1}
+\vspace{2em}
+\input{chapters/chapter0_forward.tex}
+
+
+\tableofcontents
+
+%for book the following things might help
+%\begin{titlepage}
+% design your title page here
+%\end{titlepage}
+%\resetbengalipage
+%\bengalipageplainalpha
+%\tableofcontents
+%\listoffigures
+%\clearpage
+%\resetbengalipage
+%\bengalipagefancynumber
+%\fancyhead[LO,RE]{\sl\nouppercase\leftmark} % twoside
+%\fancyhead[LE,RO]{\sl\nouppercase\rightmark} % twoside
+
+\input{chapters/chapter1_intro.tex}
+\input{chapters/chapter2_C.tex}
+
+%\clearpage \addcontentsline{toc}{chapter}{Index} \printindex
+
+\end{document}
+

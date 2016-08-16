@@ -1,0 +1,139 @@
+% Written by 2013 M.A.H. Newton (mahnewton@gmail.com)
+% with the help of devanagaridigits.sty
+
+\ProvidesPackage{bengalidigits}
+        [2013/08/06 v0.1 %
+         Formatting of Bengali digits]
+
+\def\bengaliconso#1{%
+\ifcase#1\or
+  ক\or
+  খ\or
+  গ\or
+  ঘ\or
+ ঙ\or
+  চ\or
+  ছ\or
+  জ\or
+  ঝ\or
+  ঞ\or
+  ট\or
+  ঠ\or
+  ড\or
+  ঢ\or
+  ণ\or
+  ত\or
+  থ\or
+  দ\or
+  ধ\or
+  ন\or
+  প\or
+   ফ\or
+  ব\or
+  ভ\or
+  ম\or
+  য\or
+  র\or
+  ল\or
+  শ\or
+  ষ\or
+  স\or
+  হ\or
+  ড়\or
+  ঢ়\or
+  য়%
+‌‌\fi}
+
+\def\bengalivowel#1{%
+\ifcase#1\or
+ অ\or
+ আ\or
+  ই\or
+  ঈ\or
+ উ\or
+  ঊ\or
+  ঋ\or
+ এ\or
+ ঐ\or
+  ও\or
+  ঔ%
+\fi}
+
+\def\bengalidigits#1{\expandafter\@bengali@digits #1@}
+\def\@bengali@digits#1{%
+  \ifx @#1% then terminate
+  \else
+	\ifx 0#1০\else
+	\ifx 1#1১\else
+	\ifx 2#1২\else
+	\ifx 3#1৩\else
+	\ifx 4#1৪\else
+	\ifx 5#1৫\else
+	\ifx 6#1৬\else
+	\ifx 7#1৭\else
+	\ifx 8#1৮\else
+	\ifx 9#1৯\else
+	\ifx a#1ক\else
+	\ifx b#1খ\else
+	\ifx c#1গ\else
+	\ifx d#1ঘ\else
+	\ifx e#1ঙ\else
+	\ifx f#1চ\else
+	\ifx g#1ছ\else
+	\ifx h#1জ\else
+	\ifx i#1ঝ\else
+	\ifx j#1ঞ\else
+	\ifx k#1ট\else
+	\ifx l#1ঠ\else
+	\ifx m#1ড\else
+	\ifx n#1ঢ\else
+	\ifx o#1ণ\else
+	\ifx p#1ত\else
+	\ifx q#1থ\else
+	\ifx r#1দ\else
+	\ifx s#1ধ\else
+	\ifx t#1ন\else
+	\ifx u#1প\else
+	\ifx v#1ফ\else
+	\ifx w#1ব\else
+	\ifx x#1ভ\else
+	\ifx y#1ম\else
+	\ifx z#1য\else
+	\ifx A#1ক\else
+	\ifx B#1খ\else
+	\ifx C#1গ\else
+	\ifx D#1ঘ\else
+	\ifx E#1ঙ\else
+	\ifx F#1চ\else
+	\ifx G#1ছ\else
+	\ifx H#1জ\else
+	\ifx I#1ঝ\else
+	\ifx J#1ঞ\else
+	\ifx K#1ট\else
+	\ifx L#1ঠ\else
+	\ifx M#1ড\else
+	\ifx N#1ঢ\else
+	\ifx O#1ণ\else
+	\ifx P#1ত\else
+	\ifx Q#1থ\else
+	\ifx R#1দ\else
+	\ifx S#1ধ\else
+	\ifx T#1ন\else
+	\ifx U#1প\else
+	\ifx V#1ফ\else
+	\ifx W#1ব\else
+	\ifx X#1ভ\else
+	\ifx Y#1ম\else
+	\ifx Z#1য\else#1
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+	\fi\fi\fi\fi\fi\fi
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+	\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+	\fi\fi\fi\fi\fi\fi
+	\expandafter\@bengali@digits
+  \fi
+}
+
+\endinput

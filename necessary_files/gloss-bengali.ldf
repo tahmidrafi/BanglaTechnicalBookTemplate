@@ -1,0 +1,56 @@
+% Translations provided by সাজেদুর রহিম জোয়ারদার <toshazed@gmail.com>
+% This file is now modified by নিউটন মু. অা. হাকিম <mahnewton@gmail.com>
+% Accompanying files banglatex.sty and bengalidigits.sty 
+% The above two files are written by নিউটন মু. অা. হাকিম <mahnewton@gmail.com>
+% TODO implement Bengali calendar
+
+\ProvidesFile{gloss-bengali.ldf}[polyglossia: module for bengali]
+\RequirePackage{bengalidigits}
+
+\PolyglossiaSetup{bengali}{
+  script=Bengali,
+  scripttag=beng,
+  langtag=BEN,
+  hyphennames={bengali},
+  hyphenmins={2,2},%CHECK
+  fontsetup=true
+  %TODO nouppercase=true,
+  %TODO localnumber=bengalinumber
+}
+
+\def\tmp@western{Western}
+\newif\ifbengali@bengali@numerals
+\bengali@bengali@numeralstrue
+
+\define@key{bengali}{numerals}[Bengali]{%
+  \def\@tmpa{#1}%
+  \ifx\@tmpa\tmp@western
+    \bengali@bengali@numeralsfalse
+  \fi}
+
+\def\datebengali{%
+  \def\bengalimonth{%
+    \ifcase\month\or
+      জানুয়ারী\or
+      ফেব্রুয়ারী\or
+      মার্চ\or
+      এপ্রিল\or
+      মে\or
+      জুন\or
+      জুলাই\or
+      আগষ্ট\or
+      সেপ্টেম্বর\or
+      অক্টোবর\or
+      নভেম্বর\or
+      ডিসেম্বর\fi}%
+  \def\today{\bengalinumber\day\space\bengalimonth\space\bengalinumber\year}%
+}
+
+\def\bengalinumber#1{%
+  \ifbengali@bengali@numerals
+   \bengalidigits{\number#1}%
+  \else
+    \number#1%
+  \fi}
+
+\endinput

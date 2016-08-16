@@ -1,0 +1,152 @@
+\documentclass[xetex]{beamer}
+
+\mode<presentation>
+{
+	\usetheme[somber=false,ruled=true,arrow=true,square=false,shadow=true]{xelatexbengali}
+}
+\newcommand{\ignore}[1]{}
+
+\begin{document}
+
+\title[BeamerThemeXeLaTeXBengali]{জিলাটেক ‌ \XeLaTeX‌\ দিয়ে বাংলায় প্রেজেন্টেশন}
+\author{নিউটন মু.আ.হাকিম}
+\institute{mahnewton@gmail.com}
+
+%\date{}
+
+
+\begin{frame}{}
+   \titlepage
+\end{frame}
+
+%\ignore{
+\begin{frame}
+	\frametitle{আলোচ্য সুচী}
+	\begin{columns}
+	\column{0.47\textwidth}
+	\tableofcontents
+	\column{0.47\textwidth}
+	\end{columns}
+\end{frame}
+
+\section{পরিচিতি}
+\begin{frame}{থিম পরিচিতি}
+	\begin{block}{থিম}
+	\begin{description}
+		\item[নাম:] ‌{\rm xelatexbengali}; সব ছোট হাতের।
+		\item[ব্যবহার:] {\rm sample-slide.tex} ফাইল দেখুন
+		\item[অপশন:] {\rm somber,ruled,arrow,square,shadow}
+		\item[অপশনের মান:] সবগুলো {\rm boolean; $\langle$option$\rangle$=true or false}
+	\end{description}
+	\end{block}
+	\begin{block}{ইনস্টলেশন}
+	sample-article.pdf বা readme-article.pdf এ জিলাটেকবেংগলি ইন্সটলেশন প্রসিডিউর দেখুন।
+	\end{block}
+\end{frame}
+
+\section{দরকারী ফাইল}
+
+\begin{frame}{দরকারী ফাইল}
+	\begin{alertblock}{আবশ্যিক ফাইল}
+	\begin{itemize}
+		\item {\rm beamerthemexelatexbengali.sty}
+	\end{itemize}
+	\end{alertblock}
+
+	\begin{block}{জিলাটেক বেঙ্গলি}
+	\begin{itemize}
+		\item {\rm xelatexbengali.sty} ফাইলছাড়া সবগুলো এখানেও দরকার।
+	\end{itemize}
+	\end{block}
+
+	\begin{block}{{\rm \LaTeX} কম্পাইলার}
+	\begin{itemize}
+		\item কেবলমাত্র {\rm \XeLaTeX} জিলাটেক
+	\end{itemize}
+	\end{block}
+
+	\begin{exampleblock}{অপশনাল ফাইল}
+	\begin{itemize}
+		\item {\rm sample-slide.tex}
+	\end{itemize}
+	\end{exampleblock}
+
+\end{frame}
+
+\section{অপশন সমুহ}
+
+\begin{frame}{অপশন সমুহ}
+	\begin{small}	
+	\begin{enumerate}
+		\item \rm{\structure{Somber:} if true, use dull colors; else bright colors.}
+		\item \rm{\structure{Ruled:} if true, draws a rule below the frame title.} 
+		\item \rm{\structure{Square:} if true, use squares for enumerate; else circles.}
+		\item \rm{\structure{Arrow:} if true, use arrows for \alert{itemize}; else follow \alert{enumerate}.}
+		\item \rm{\structure{Shadow:} if true, shadows for 3D appearances of the blocks.}
+	\end{enumerate}
+	\end{small}
+\end{frame}
+
+\begin{frame}{এনভায়রনমেন্টস}
+	‌\begin{theorem}[জোড় সংখ্যা]
+	জোড় সংখ্যা মাত্রই দুই দিয়ে বিভাজ্য।
+	\end{theorem}
+	‌\begin{lemma}[বিজোড় সংখ্যা]
+	বিজোড় সংখ্যা মাত্রই দুই দিয়ে বিভাজ্য নয়।
+	\end{lemma}
+	‌\begin{corollary}[স্বাভাবিক সংখ্যা]
+	জোড় ও বিজোড় সবগুলো মিলিয়ে স্বাভাবিক সংখ্যা।
+	\end{corollary}
+\end{frame}
+
+\begin{frame}{এনভায়রনমেন্টস}
+	‌\begin{problem}[বৃত্ত অংকন]
+	তিনটি বিন্দু দিয়ে একটি বৃত্ত আঁকুন।
+	\end{problem}
+	‌\begin{definition}[শুন্য]
+	শুন্য মানে কিছুই না।
+	\end{definition}
+	‌\begin{example}[এক]
+	১ বা এক বা {\rm I} বা {\rm 1}.
+	\end{example}
+\end{frame}
+
+\begin{frame}{এনভায়রনমেন্টস ‌\ldots}
+	‌\begin{solution}[বৃত্ত অংকন]
+	দুটো করে বিন্দু নিয়ে দুটো রেখা এঁকে তাদের মধ্যবিন্দুতে লম্ব আঁকুন, লম্বদ্বয়ের ছেদবিন্দুকে কেন্দ্র করে যেকোন একটি বিন্দু পর্যন্ত ব্যাসার্ধ নিয়ে বৃত্ত আঁকুন।
+	\end{solution}
+	‌\begin{proof}[বৃত্ত অংকন]
+	মধ্যবিন্দুতে লম্বগুলো সংশ্লিষ্টবিন্দু গুলো থেকে সমদুরত্বে। লম্বদ্বয়ের ছেদবিন্দু তিনটি বিন্দু থেকেই সমদুরত্বে।
+	\end{proof}
+	‌\begin{exercise}[মধ্যবিন্দু]
+	দুটো বিন্দুর সংযোগ রেখার মধ্যবিন্দু বের করুন।
+	\end{exercise}
+\end{frame}
+
+\begin{frame}{এনভায়রনমেন্টস ‌\ldots}
+	\begin{proposition}[সত্য]
+	নহে সত্য নহে মিথ্যায় নহে সত্য-মিথ্যা। 
+	\end{proposition}
+	\begin{equation}
+	\mathbn{a + b = c}
+	\end{equation}
+	\begin{figure}
+	‌{‌\Huge\bnem ‌নকশা}
+	\caption{নকশার উদাহরণ}
+	\end{figure}
+	\vspace{-3em}
+	\begin{table}
+	\caption{সারণীর উদাহরণ}
+	‌\begin{tabular}{|c|c|}
+	\hline
+	অ & আ‌‌\\\hline
+	ক & খ\\\hline
+	\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}{উপসংহার}
+যে কোন ভুলভ্রান্তি ও পরামর্শ আমাদের জানাতে অনুরোধ করছি। আমরা সংশোধন ও পরিবর্ধনের চেষ্টা করব। জানা সমস্যাগুলোর মধ্যে {\rm bibtex} এর সাথে সমন্বয় এখনো করা হয় নাই। কাজেই তথ্যসুত্র গুলোর রেফারেন্সে ইংলিশ অক্ষর চলে আসতে পারে। বাংলায় প্রেজেন্টশন বানানো উপভোগ করুন। অন্যদের জানিয়ে সেই আনন্দ ছড়িয়ে দিন।
+\end{frame}
+\end{document}
+

@@ -1,0 +1,222 @@
+% Copyright 2013 by M.A.H. Newton mahnewton@gmail.com
+% This file may be distributed and/or modified freely.
+% The author has no liability under any circumstances.
+% Use sample.tex for usage/installation details
+
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{xelatexbengali}[2013/08/02 M.A.H. Newton's XeLatex Style File for Bengali]
+
+\RequirePackage{xunicode}
+\RequirePackage{xltxtra}
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+\RequirePackage{fancyhdr}
+
+\newfontface\bengalifont[Script=Bengali]{SolaimanLipi}				% 	Default font that must be defined.
+\setromanfont{SolaimanLipi}					%	roman font
+\setsansfont{Rupali}						%	sans font
+\setmonofont{Ekushey Durga}					%	mono font
+
+\setmainlanguage[numerals=Bengali]{bengali}
+\selectlanguage{bengali}
+\selectbackgroundlanguage{bengali}
+
+
+% Font files to be used for different semantic elements.
+% You can change the fonts as you wish
+\newfontface\bnrm[Script=Bengali]{SolaimanLipi}						%	Regular bengali substitution for roman style text
+\newfontface\bnbf[Script=Bengali]{SolaimanLipi Bold}				%	Bold font bengali substitution for roman style text
+\newfontface\bntt[Script=Bengali,Scale=1.1]{Ekushey Durga}			%	Use for teletypewriting style bengali font
+\newfontface\bnem[Script=Bengali]{Ekushey Punarbhaba}				%	Use for emphasising in bengali
+\newfontface\bnbi[Script=Bengali,Scale=1.3]{Ekushey Azad}			% 	Use for bold-italic in bengali
+\newfontface\bnit[Script=Bengali,Scale=1.1]{Ekushey Saraswatii}		%	Use for italic in bengali
+\newfontface\bnsf[Script=Bengali]{Rupali}							%	Use for sans font in bengali
+
+%Change this captions as you need
+\def\captionsbengali{%
+  \def\refname{তথ্যসুত্রাবলী}%
+  \def\abstractname{সারাংশ}%
+  \def\bibname{গ্রন্থসুত্রাবলী}%
+  \def\prefacename{পূর্বকথা}%
+  \def\chaptername{অধ্যায়}%
+  \def\appendixname{পরিশিষ্ট}%
+  \def\contentsname{সূচীপত্র}%
+  \def\listfigurename{নকশা তালিকা}%
+  \def\listtablename{সারণী তালিকা}%
+  \def\indexname{সূচক}%
+  \def\figurename{নকশা}%
+  \def\tablename{সারনী}%
+  \def\partname{খন্ড}%
+  \def\pagename{পৃষ্ঠা}%
+  \def\seename{দেখুন}%
+  \def\alsoname{আরও দেখুন}%
+  \def\enclname{সংযুক্তি}%
+  \def\ccname{অনুলিপি}%
+  \def\headtoname{প্রতি}%
+  \def\proofname{প্রমাণ}%
+  \def\glossaryname{পরিভাষা}%
+  \def\solutionname{সমাধান}
+  \def\theoremname{উপপাদ্য}
+  \def\lemmaname{প্রতিপাদ্য}
+  \def\corollaryname{অনুসিদ্ধান্ত}
+  \def\problemname{সম্পাদ্য}
+  \def\propositionname{প্রতিজ্ঞা}
+  \def\definitionname{সংজ্ঞা}
+  \def\equationname{সমীকরণ}
+  \def\examplename{উদাহরণ}
+  \def\exercisename{অনুশীলনী}
+}
+
+
+% Fix the part number
+\ifx\thepart\undefined
+\else
+	\renewcommand\thepart{\bengalinumber{\arabic{part}}}
+\fi
+
+% Fix the footnote, paragraph, subparagraph numbering styles
+\renewcommand\thefootnote{\bengalinumber{\arabic{footnote}}}
+\renewcommand\theparagraph{\bengalinumber{\arabic{paragraph}}}
+\renewcommand\thesubparagraph{\bengalinumber{\arabic{subparagraph}}}
+
+% Fix the chapter, section, subsection, subsubsection numbering styles
+\ifx\thechapter\undefined
+		\renewcommand\thesection{\bengalinumber{\arabic{section}}}
+		\renewcommand\thesubsection{\bengalinumber{\arabic{section}}.\bengalinumber{\arabic{subsection}}}
+		\renewcommand\thesubsubsection{\bengalinumber{\arabic{section}}.\bengalinumber{\arabic{subsection}}.\bengalinumber{\arabic{subsubsecton}}}
+		\renewcommand{\thefigure}{\bengalinumber{\arabic{figure}}} 
+		\renewcommand{\thetable}{\bengalinumber{\arabic{table}}}
+		\renewcommand{\theequation}{\bengalinumber{\arabic{equation}}}
+\else
+		\renewcommand\thechapter{\bengalinumber{\arabic{chapter}}}
+		\renewcommand\thesection{\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{section}}}
+		\renewcommand\thesubsection{\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{section}}.\bengalinumber{\arabic{subsection}}}
+		\renewcommand\thesubsubsection{\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{section}}.\bengalinumber{\arabic{subsection}}.\bengalinumber{\arabic{subsubsection}}}
+		\renewcommand{\thefigure}{\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{figure}}} 
+		\renewcommand{\thetable}{\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{table}}}
+		\renewcommand{\theequation}{\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{equation}}}
+\fi
+
+
+% Fix the enumeration numbering style
+\renewcommand\theenumi{\bengalinumber{\@arabic\c@enumi}}
+\renewcommand\theenumii{\bengaliconso{\@arabic\c@enumii}}
+\renewcommand\theenumiii{\bengalivowel{\@arabic\c@enumiii}}
+\renewcommand\theenumiv{\bengalinumber{\@arabic\c@enumiv}}
+
+% Fix the enumeration labelling style
+\renewcommand{\labelenumi}{\theenumi. }
+\renewcommand{\labelenumii}{\theenumii) }
+\renewcommand{\labelenumiii}{(\theenumiii) }
+\renewcommand{\labelenumiv}{\theenumiv। }
+
+% Fix nobreakspace 
+\def\nobreakspace{\nobreak\space\nobreak}
+
+% Mathmetical theorems and environments  
+\ifx\thechapter\undefined
+	\newtheorem{theorem}{{\bnbf\theoremname}}
+	\newtheorem{lemma}[theorem]{{\bnbf\lemmaname}}
+	\newtheorem{corollary}[theorem]{{\bnbf\corollaryname}}
+	\newtheorem{problem}[theorem]{{\bnbf\problemname}}
+	\newtheorem{proposition}[theorem]{{\bnbf\propositionname}}
+	\newtheorem{definition}{{\bnbf\definitionname}}
+	\newtheorem{example}[definition]{{\bnbf\examplename}}
+	\newtheorem{exercise}{{\bnbf\exercisename}}
+	\renewcommand{\thetheorem}{{\bnbf\bengalinumber{\arabic{theorem}}:}}
+	\renewcommand{\thelemma}{{\bnbf\bengalinumber{\arabic{lemma}}:}}
+	\renewcommand{\thecorollary}{{\bnbf\bengalinumber{\arabic{corollary}}:}}
+	\renewcommand{\theproblem}{{\bnbf\bengalinumber{\arabic{problem}}:}}
+	\renewcommand{\theproposition}{{\bnbf\bengalinumber{\arabic{proposition}}:}}
+	\renewcommand{\thedefinition}{{\bnbf\bengalinumber{\arabic{definition}}:}}
+	\renewcommand{\theexample}{{\bnbf\bengalinumber{\arabic{example}}:}}
+	\renewcommand{\theexercise}{{\bnbf\bengalinumber{\arabic{exercise}}:}}
+\else
+	\newtheorem{theorem}{{\bnbf\theoremname}}[chapter]
+	\newtheorem{lemma}[theorem]{{\bnbf\lemmaname}}
+	\newtheorem{corollary}[theorem]{{\bnbf\corollaryname}}
+	\newtheorem{problem}[theorem]{{\bnbf\problemname}}
+	\newtheorem{proposition}[theorem]{{\bnbf\propositionname}}
+	\newtheorem{definition}{{\bnbf\definitionname}}[chapter]
+	\newtheorem{example}[definition]{{\bnbf\examplename}}
+	\newtheorem{exercise}{{\bnbf\exercisename}}[chapter]
+	\renewcommand{\thetheorem}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{theorem}}:}}
+	\renewcommand{\thelemma}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{lemma}}:}}
+	\renewcommand{\thecorollary}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{corollary}}:}}
+	\renewcommand{\theproblem}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{problem}}:}}
+	\renewcommand{\theproposition}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{proposition}}:}}
+	\renewcommand{\thedefinition}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{definition}}:}}
+	\renewcommand{\theexample}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{example}}:}}
+	\renewcommand{\theexercise}{{\bnbf\bengalinumber{\arabic{chapter}}.\bengalinumber{\arabic{exercise}}:}}
+\fi
+
+\newenvironment{proof}{\par\noindent{\bnbf\proofname:}}{}
+\newenvironment{solution}{\par\noindent{\bnbf\solutionname:}}{}
+
+% Fix page numbering in the table of contents, list of figures and list of tables
+\let\Contentsline\contentsline
+\renewcommand\contentsline[3]{\Contentsline{#1}{#2}{\bengalinumber{#3}}}
+
+
+% reset bengali page number to zero
+\newcommand{\resetbengalipage}{
+	\pagenumbering{arabic}	
+}
+
+% Set bengali page numbering to fancy number
+\newcommand{\bengalipagefancynumber}{
+	\fancypagestyle{plain}{%
+		\fancyhf{}
+		\fancyfoot[C]{\bengalinumber{\thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}}
+	\pagestyle{fancy}
+	\fancyfoot[C]{\bengalinumber{\thepage}}
+	\renewcommand{\headrulewidth}{0pt}
+	\addtolength{\headheight}{3pt}
+}
+
+% Set bengali page numbering to fancy alpha
+\newcommand{\bengalipagefancyalpha}{
+	\fancypagestyle{plain}{%
+		\fancyhf{}
+		\fancyfoot[C]{\bengaliconso{\thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}}
+	\pagestyle{fancy}
+	\fancyfoot[C]{\bengaliconso{\thepage}}
+	\renewcommand{\headrulewidth}{0pt}
+	\addtolength{\headheight}{3pt}
+}
+
+% Set bengali page numbering to plain number
+\newcommand{\bengalipageplainnumber}{
+	\fancypagestyle{plain}{%
+		\fancyhf{}
+		\fancyfoot[C]{\bengalinumber{\thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}}
+	\pagestyle{plain}
+}
+
+% Set bengali page numbering to plain alpha
+\newcommand{\bengalipageplainalpha}{
+	\fancypagestyle{plain}{%
+		\fancyhf{}
+		\fancyfoot[C]{\bengaliconso{\thepage}}
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}}
+	\pagestyle{plain}
+}
+
+
+% Set bengali page numbering to empty
+\newcommand{\bengalipageempty}{
+	\pagestyle{empty}
+}
+
+% Set default bengali page style plain number
+\bengalipageplainnumber
+
+\endinput
